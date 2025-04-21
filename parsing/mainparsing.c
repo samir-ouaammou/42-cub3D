@@ -1,0 +1,223 @@
+#include "../cub3D.h"
+
+void    ft_init_parsing(t_parsing *data)
+{
+    data->fd = 0;
+    data->raycasting = 0;
+    data->line = NULL;
+    data->split = NULL;
+    data->tmp = NULL;
+    data->str = NULL;
+    data->map = NULL;
+}
+
+void    ft_print_error(char *str)
+{
+    while (*str)
+        write (2, str++, 1);
+
+    ft_exit(-1);
+}
+
+void    ft_read_map_file(t_parsing *data)
+{
+    if (!data)
+        ft_exit(-1);
+    while (1)
+    {
+        data->line = get_next_line(data->fd);
+        if (!data->line)
+			break ;
+		if (data->line[0] == '\n')
+		{
+			write(2, "Error\nInvalid map: The map contains an ", 39);
+			write(2, "empty line. Ensure there are no blank ", 38);
+			ft_print_error("lines between rows of the map.\n");
+		}
+        data->tmp = ft_strjoin(data->str, data->line);
+		if (!data->tmp)
+			ft_print_error("Error\nFailed to read the file\n");
+		data->str = data->tmp;
+    }
+    data->map = ft_split(data->str, '\n');
+}
+
+short    ft_count_len(char **strs, short i)
+{
+    if (!strs)
+        ft_exit(-1);
+
+    i = 0;
+    while (strs[i])
+        i++;
+
+    return (i);
+}
+
+void    ft_check_texture_is_valid(t_parsing *data)
+{
+    if (!data)
+        ft_exit(-1);
+    data->split = ft_split(data->map[0], ' ');
+    if (ft_count_len(data->split, 0) != 2 || ft_strcmp(data->split[0], "NO"))
+        ft_print_error("Error\nInvalid texture identifier. Expected 'NO'.\n");
+    if (open(data->split[1], O_RDONLY) == -1)
+        ft_print_error("Error\nInvalid path for north texture (NO). Please provide a valid file path.\n");
+    
+    data->split = ft_split(data->map[1], ' ');
+    if (ft_count_len(data->split, 0) != 2 || ft_strcmp(data->split[0], "SO"))
+        ft_print_error("Error\nInvalid texture identifier. Expected 'SO'.\n");
+    if (open(data->split[1], O_RDONLY) == -1)
+        ft_print_error("Error\nInvalid path for south texture (SO). Please provide a valid file path.\n");
+    
+    data->split = ft_split(data->map[2], ' ');
+    if (ft_count_len(data->split, 0) != 2 || ft_strcmp(data->split[0], "WE"))
+        ft_print_error("Error\nInvalid texture identifier. Expected 'WE'.\n");
+    if (open(data->split[1], O_RDONLY) == -1)
+        ft_print_error("Error\nInvalid path for west texture (WE). Please provide a valid file path.\n");
+    
+    data->split = ft_split(data->map[3], ' ');
+    if (ft_count_len(data->split, 0) != 2 || ft_strcmp(data->split[0], "EA"))
+        ft_print_error("Error\nInvalid texture identifier. Expected 'EA'.\n");
+    if (open(data->split[1], O_RDONLY) == -1)
+        ft_print_error("Error\nInvalid path for east texture (EA). Please provide a valid file path.\n");
+}
+
+void    ft_check_floor_color(t_parsing *data)
+{
+    int i;
+    int len;
+
+    if (!data)
+        ft_exit(-1);
+    data->split = ft_split(data->map[4], ' ');
+    if (ft_count_len(data->split, 0) != 2 || ft_strcmp(data->split[0], "F"))
+        ft_print_error("Error\nInvalid floor color. Expected: F R,G,B (e.g. F 220,100,0)");
+    i = -1;
+    len = 0;
+    while (data->split && data->split[1][++i])
+    {
+        if (data->split[1][i] == ',' && data->split[1][i + 1] && data->split[1][i + 1] == ',')
+            ft_print_error("Error\nfloor color format error — double comma found.\n");
+        if (data->split[1][i] == ',')
+            len++;
+    }
+    data->split = ft_split(data->split[1], ',');
+    if (len != 2 || ft_count_len(data->split, 0) != 3)
+        ft_print_error("Error\nInvalid floor color — repeated , detected. Format must be: F R,G,B.\n");
+    if (ft_atoi(data->split[0]) == -1 || ft_atoi(data->split[1]) == -1 || ft_atoi(data->split[2]) == -1)
+        ft_print_error("Error\nFloor color must contain only integers. Invalid characters detected.\n");
+}
+
+void    ft_check_ceiling_color(t_parsing *data)
+{
+    int i;
+    int len;
+
+    if (!data)
+        ft_exit(-1);
+    data->split = ft_split(data->map[5], ' ');
+    if (ft_count_len(data->split, 0) != 2 || ft_strcmp(data->split[0], "C"))
+        ft_print_error("Error\nInvalid ceiling color format. Expected: C R,G,B (e.g. C 225,30,0).\n");
+    i = -1;
+    len = 0;
+    while (data->split && data->split[1][++i])
+    {
+        if (data->split[1][i] == ',' && data->split[1][i + 1] && data->split[1][i + 1] == ',')
+            ft_print_error("Error\nCeiling color format error — double comma found.\n");
+        if (data->split[1][i] == ',')
+            len++;
+    }
+    data->split = ft_split(data->split[1], ',');
+    if (len != 2 || ft_count_len(data->split, 0) != 3)
+        ft_print_error("Error\nCeiling color format error — double ',' found. Expected: C R,G,B.\n");
+    if (ft_atoi(data->split[0]) == -1 || ft_atoi(data->split[1]) == -1 || ft_atoi(data->split[2]) == -1)
+        ft_print_error("Error\nCeiling color must contain only integers. Invalid characters detected.\n");
+}
+
+int    ft_cheh_is_player(char c)
+{
+    if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+        return (1);
+    return (0);
+}
+
+void    ft_check_map(char **map, int i, int j, int player)
+{
+    while (map[++i])
+    {
+        j = -1;
+        while (map[i][++j])
+        {
+            if (!ft_cheh_is_player(map[i][j]) && map[i][j] != '1'
+                && map[i][j] != '0' && map[i][j] != ' ')
+            {
+                write(2, "Error\nInvalid character found. Only '1', '0', ", 47);
+                ft_print_error("'N', 'S', 'E', 'W', and space are allowed.\n");
+            }
+            if (ft_cheh_is_player(map[i][j]))
+                player++;
+        }
+    }
+    if (player != 1)
+    {
+        write(2, "Error\nThere must be exactly one player starting position ", 57);
+        ft_print_error("('N', 'S', 'E', or 'W') in the map.\n");
+    }
+}
+
+void    ft_check_elements(char **map, int i, int j, int len)
+{
+    while (map[++i])
+    {
+        j = -1;
+        while (map[i][++j])
+        {
+            if (map[i][j] == '0' || ft_cheh_is_player(map[i][j]))
+            {
+                if (i == 0 || j == 0 || i == len - 1 || j == ft_strlen(map[i]) - 1
+                    || !map[i][j + 1] || map[i][j + 1] == ' ' || map[i][j - 1] == ' '
+                    || !map[i + 1][j] || map[i + 1][j] == ' ' || map[i - 1][j] == ' '
+                    || ft_strlen(map[i + 1]) < j + 1 || ft_strlen(map[i - 1]) < j + 1)
+                    {
+                        printf("Error\nMap is not closed around (%d,%d).\n", i + 7, j + 1);
+                        ft_exit(-1);
+                    }
+            }
+        }
+    }
+}
+
+void    ft_check_map_elements(t_parsing *data)
+{
+    if (!data)
+        ft_exit(-1);
+    ft_check_texture_is_valid(data);
+    ft_check_floor_color(data);
+    ft_check_ceiling_color(data);
+    ft_check_map(&data->map[6], -1, 0, 0);
+    ft_check_elements(&data->map[6], -1, 0, ft_count_len(&data->map[6], 0));
+}
+
+char    **ft_parsing(char *filename)
+{
+    t_parsing data;
+    int len;
+
+    ft_init_parsing(&data);
+    len = ft_strlen(filename);
+	if ((len < 5) || (ft_strcmp(&filename[len - 4], ".cub") != 0))
+	{
+		write(2, "Error\nInvalid map file name. ", 29);
+		ft_print_error("Please use a valid file, like map.cub\n");
+	}
+    data.fd = open(filename, O_RDONLY);
+	if (data.fd == -1)
+		ft_print_error("Error\nError opening file map\n");
+	ft_read_map_file(&data);
+    if (ft_count_len(data.map, 0) < 9)
+        ft_print_error("Error\nInvalid map.\n");
+    ft_check_map_elements(&data);
+
+    return (NULL);
+}
