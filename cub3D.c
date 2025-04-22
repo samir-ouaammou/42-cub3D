@@ -10,5 +10,8 @@ int main(int ac, char **av)
     // if (map);
         // ft_raycasting();
 
+    while (*map)
+        printf("%s\n", *map++);
+
     return (0);
 }

@@ -235,6 +235,5 @@ char    **ft_parsing(char *filename)
     if (ft_count_len(data.map, 0) < 9)
         ft_print_error("Error\nInvalid map.\n");
     ft_check_map_elements(&data);
-
-    return (NULL);
+    return (data.map);
 }
