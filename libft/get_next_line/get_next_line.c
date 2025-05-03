@@ -91,7 +91,7 @@ char	*next_line(char **tmp)
 	return (save);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(short fd)
 {
 	static char	*save;
 	char		*line;

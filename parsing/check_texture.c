@@ -10,7 +10,7 @@ short	ft_count_len(char **strs, short i)
 	return (i);
 }
 
-int	ft_check_texture_is_valid(t_parsing *data)
+short	ft_check_texture_is_valid(t_parsing *data)
 {
 	data->split = ft_split(data->map[0], ' ');
 	if (ft_count_len(data->split, 0) != 2 || ft_strcmp(data->split[0], "NO"))

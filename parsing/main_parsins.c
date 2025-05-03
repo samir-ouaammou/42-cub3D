@@ -25,12 +25,13 @@ void	ft_check_map_elements(t_parsing *data)
 	ft_check_ceiling_color(data, -1, 0);
 	ft_check_map(&data->map[6], -1, 0, 0);
 	ft_check_elements(&data->map[6], -1, 0, ft_count_len(&data->map[6], 0));
+	ft_check_dor_errors(&data->map[6], -1, -1);
 }
 
 char	**ft_check_map_errors(char *filename)
 {
 	t_parsing	data;
-	int			len;
+	short		len;
 
 	ft_init_parsing(&data);
 	data.str = ft_strrchr(filename, '/');

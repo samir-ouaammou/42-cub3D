@@ -7,7 +7,7 @@ int	ft_cheh_is_player(char c)
 	return (0);
 }
 
-void	ft_check_map(char **map, int i, int j, int player)
+void	ft_check_map(char **map, short i, short j, short player)
 {
 	while (map[++i])
 	{
@@ -15,10 +15,11 @@ void	ft_check_map(char **map, int i, int j, int player)
 		while (map[i][++j])
 		{
 			if (!ft_cheh_is_player(map[i][j]) && map[i][j] != '1'
-				&& map[i][j] != '0' && map[i][j] != ' ')
+				&& map[i][j] != '0' && map[i][j] != ' '
+				&& map[i][j] != 'D' && map[i][j] != 'O')
 			{
 				write(2, "Error\nInvalid character found. Only '1', '0', ", 46);
-				ft_print_error("'N', 'S', 'E', 'W', and space are allowed.\n");
+				ft_print_error("'N', 'S', 'E', 'W','D', 'O' and space are allowed.\n");
 			}
 			if (ft_cheh_is_player(map[i][j]))
 				player++;
@@ -32,7 +33,7 @@ void	ft_check_map(char **map, int i, int j, int player)
 	}
 }
 
-void	ft_check_elements(char **map, int i, int j, int len)
+void	ft_check_elements(char **map, short i, short j, short len)
 {
 	while (map[++i])
 	{

@@ -13,7 +13,7 @@ void	ft_map_for_exomple(void)
 
 void	ft_read_map_file(t_parsing *data)
 {
-	int	i;
+	short	i;
 
 	if (!data)
 		ft_exit(-1);

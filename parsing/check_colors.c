@@ -1,6 +1,6 @@
 #include "../cub3D.h"
 
-int	ft_check_floor_color(t_parsing *data, int i, int len)
+short	ft_check_floor_color(t_parsing *data, short i, short len)
 {
 	if (!data)
 		ft_exit(-1);
@@ -28,7 +28,7 @@ int	ft_check_floor_color(t_parsing *data, int i, int len)
 	return (0);
 }
 
-int	ft_check_ceiling_color(t_parsing *data, int i, int len)
+short	ft_check_ceiling_color(t_parsing *data, short i, short len)
 {
 	data->split = ft_split(data->map[5], ' ');
 	if (ft_count_len(data->split, 0) != 2 || ft_strcmp(data->split[0], "C"))

@@ -2,7 +2,7 @@
 
 void	ft_assign_map_config_values(char **str, t_map_config *map)
 {
-	size_t(i), (j);
+	short (i), (j);
 	if (!str || !map)
 		ft_exit(-1);
 	map->no_texture = ft_split(str[0], ' ')[1];
