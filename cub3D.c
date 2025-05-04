@@ -10,7 +10,7 @@ int main(int ac, char **av)
         write(2, " correctly defined and follows the required format.\n", 52);
         exit (-1);
     }
-    ft_assign_map_config_values(ft_check_map_errors(av[1]), &map);
+    ft_assign_map_config_values(&map, ft_check_map_errors(av[1]));
 
     // ------------------------
     // printf("TEXTUSE:\n%s\n", map.no_texture);

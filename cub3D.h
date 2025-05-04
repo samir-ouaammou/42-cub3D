@@ -48,7 +48,8 @@ void	            ft_check_dor_errors(char **map, short i, short j);
 void	            ft_check_map(char **map, short i, short j, short player);
 short	            ft_check_floor_color(t_parsing *data, short i, short len);
 void	            ft_check_elements(char **map, short i, short j, short len);
-void	            ft_assign_map_config_values(char **str, t_map_config *map);
+void	            ft_assign_map_config_values(t_map_config *map, char **str);
 short	            ft_check_ceiling_color(t_parsing *data, short i, short len);
+void	            ft_parse_player_and_map_size(t_map_config *map, char **str);
 
 #endif
