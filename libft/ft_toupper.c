@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncpy.c                                       :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/08 00:04:11 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/08 00:04:13 by aahaded          ###   ########.fr       */
+/*   Created: 2024/10/24 21:06:41 by souaammo          #+#    #+#             */
+/*   Updated: 2024/10/27 19:09:59 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft.h"
+#include "libft.h"
 
-char	*ft_strncpy(char *dest, const char *src, int len)
+int	ft_toupper(int c)
 {
-	int	i;
-
-	i = 0;
-	while (src[i] && i < len)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	return (dest);
+	if (c >= 'a' && c <= 'z')
+		c -= 32;
+	return (c);
 }

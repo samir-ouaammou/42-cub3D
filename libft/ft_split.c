@@ -3,69 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.42.fr>            +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 10:35:13 by aahaded           #+#    #+#             */
-/*   Updated: 2024/11/01 11:10:33 by aahaded          ###   ########.fr       */
+/*   Created: 2024/10/25 11:59:52 by souaammo          #+#    #+#             */
+/*   Updated: 2024/11/02 12:19:09 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	count_word(const char *str, char c)
+static int	ft_word_count(const char *str, char c)
 {
-	int	i;
-	int	word;
+	int		count;
+	size_t	i;
 
+	count = 0;
 	i = 0;
-	word = 0;
 	while (str[i])
 	{
-		if (str[i] != c && (i == 0 || str[i - 1] == c))
-			word++;
-		i++;
+		while (str[i] && str[i] == c)
+			i++;
+		if (str[i])
+		{
+			count++;
+			while (str[i] && str[i] != c)
+				i++;
+		}
 	}
-	return (word);
+	return (count);
 }
 
-char	**ft_util(char **res, const char *s, char c, int c_word)
+static void	*ft_free(char **str, int count)
 {
-	int	i;
-	int	j;
-	int	e;
-	int	len;
+	while (count > 0)
+	{
+		free(str[count - 1]);
+		count--;
+	}
+	free(str);
+	return (NULL);
+}
+
+static char	**ft_split2(char **res, const char *s, char c)
+{
+	size_t	i;
+	size_t	j;
+	size_t	h;
 
 	i = 0;
-	j = 0;
-	while (i < c_word)
+	h = 0;
+	while (s[i])
 	{
-		while (s[j] && s[j] == c)
-			j++;
-		e = j;
-		while (s[j] && s[j] != c)
-			j++;
-		len = j - e;
-		res[i] = ft_ft_malloc(len + 1);
-		if (!res[i])
-			return (NULL);
-		ft_memcpy(res[i], s + e, len);
-		res[i][len] = '\0';
-		i++;
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i])
+		{
+			j = i;
+			while (s[i] && s[i] != c)
+				i++;
+			res[h] = ft_substr(s, j, i - j);
+			if (!res[h])
+				return (ft_free(res, h));
+			h++;
+		}
 	}
-	res[i] = NULL;
+	res[h] = NULL;
 	return (res);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	int		c_word;
 	char	**res;
 
 	if (!s)
 		return (NULL);
-	c_word = count_word(s, c);
-	res = ft_ft_malloc(sizeof(char *) * (c_word + 1));
-	if (res == NULL)
+	res = (char **)ft_calloc(sizeof(char *), (ft_word_count(s, c) + 1));
+	if (!res)
 		return (NULL);
-	return (ft_util(res, s, c, c_word));
+	return (ft_split2(res, s, c));
 }

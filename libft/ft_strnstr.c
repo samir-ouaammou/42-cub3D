@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 14:27:01 by souaammo          #+#    #+#             */
-/*   Updated: 2024/10/24 19:56:08 by souaammo         ###   ########.fr       */
+/*   Created: 2024/10/24 22:03:59 by souaammo          #+#    #+#             */
+/*   Updated: 2024/10/29 10:47:40 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
+char	*ft_strnstr(const char *str, const char *needle, size_t len)
 {
-	size_t	l;
+	size_t	i;
+	size_t	j;
 
-	l = 0;
-	while (str[l])
-		l++;
-	return (l);
+	if (!*needle)
+		return ((char *)str);
+	i = 0;
+	while (str[i] && i < len)
+	{
+		j = 0;
+		while (str[i + j] && needle[j] && (i + j) < len)
+		{
+			if (str[i + j] != needle[j])
+				break ;
+			j++;
+		}
+		if (!needle[j])
+			return ((char *)&str[i]);
+		i++;
+	}
+	return (NULL);
 }

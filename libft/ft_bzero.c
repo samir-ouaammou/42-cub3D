@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 14:27:01 by souaammo          #+#    #+#             */
-/*   Updated: 2024/10/24 19:56:08 by souaammo         ###   ########.fr       */
+/*   Created: 2024/10/24 20:30:52 by souaammo          #+#    #+#             */
+/*   Updated: 2024/10/25 10:21:07 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
+void	ft_bzero(void *s, size_t len)
 {
-	size_t	l;
-
-	l = 0;
-	while (str[l])
-		l++;
-	return (l);
+	ft_memset(s, 0, len);
 }

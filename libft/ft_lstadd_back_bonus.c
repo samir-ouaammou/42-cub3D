@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_unsigned.c                                :+:      :+:    :+:   */
+/*   ft_lstadd_back_bonu.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/06 18:30:35 by aahaded           #+#    #+#             */
-/*   Updated: 2024/11/07 12:44:39 by aahaded          ###   ########.fr       */
+/*   Created: 2024/10/26 15:57:17 by souaammo          #+#    #+#             */
+/*   Updated: 2024/10/28 10:05:07 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_print_unsigned(unsigned int nb)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	int	print_count;
+	t_list	*temp;
 
-	print_count = 0;
-	if (nb > 9)
-		print_count += ft_print_unsigned(nb / 10);
-	print_count += ft_putchar(((nb % 10) + '0'));
-	return (print_count);
+	if (!new)
+		return ;
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	temp = *lst;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new;
 }

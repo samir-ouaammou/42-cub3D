@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_lstmap_bonu.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/06 15:21:39 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/03 12:39:07 by souaammo         ###   ########.fr       */
+/*   Created: 2024/10/27 10:16:30 by souaammo          #+#    #+#             */
+/*   Updated: 2024/10/28 10:05:27 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "libft.h"
 
-# include <stdarg.h>
-# include <unistd.h>
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+{
+	t_list	*list;
+	t_list	*new;
+	void	*value;
 
-int	ft_putchar(int c);
-int	ft_putstr(char *s);
-int	ft_print_num(int nb);
-int	ft_printf(const char *str, ...);
-int	ft_print_ptr(unsigned long ptr);
-int	ft_print_unsigned(unsigned int nb);
-int	ft_print_hex(char c, unsigned int args);
-
-#endif
+	list = NULL;
+	while (lst && f && del)
+	{
+		value = f(lst->content);
+		new = ft_lstnew(value);
+		if (!new)
+		{
+			del(value);
+			ft_lstclear(&list, del);
+			return (NULL);
+		}
+		ft_lstadd_back(&list, new);
+		lst = lst->next;
+	}
+	return (list);
+}

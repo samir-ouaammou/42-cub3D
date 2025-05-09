@@ -34,8 +34,9 @@ void	ft_check_map(char **map, short i, short j, short player)
 	}
 }
 
-void	ft_check_elements(char **map, short i, short j, short len)
+void	ft_check_elements(char **map, size_t i, size_t j, size_t len)
 {
+	i = -1;
 	while (map[++i])
 	{
 		j = -1;
@@ -49,8 +50,7 @@ void	ft_check_elements(char **map, short i, short j, short len)
 					|| map[i - 1][j] == ' ' || ft_strlen(map[i + 1]) < j + 1
 					|| ft_strlen(map[i - 1]) < j + 1)
 				{
-					printf("Error\nMap is not closed around (%d,%d).\n", i + 9,
-						j + 1);
+					printf("Error\nMap is not closed around (?,?).\n");
 					ft_exit(-1);
 				}
 			}

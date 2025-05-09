@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.42.fr>            +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 15:29:49 by aahaded           #+#    #+#             */
-/*   Updated: 2024/11/04 11:35:22 by aahaded          ###   ########.fr       */
+/*   Created: 2024/10/24 22:14:22 by souaammo          #+#    #+#             */
+/*   Updated: 2024/11/04 10:56:32 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 int	ft_atoi(const char *str)
@@ -23,7 +24,7 @@ int	ft_atoi(const char *str)
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
-			return (-1);
+			ft_print_error("Error\nColor value must be between 0 and 255.\n");
 		i++;
 	}
 	while (ft_isdigit(str[i]))
@@ -33,7 +34,7 @@ int	ft_atoi(const char *str)
 			ft_print_error("Error\nColor value must be between 0 and 255.\n");
 		i++;
 	}
-	if (str[i] || r > 255)
+	if ((str[i] && str[i]  != '\n')|| r > 255)
 		return (-1);
 	return (r);
 }

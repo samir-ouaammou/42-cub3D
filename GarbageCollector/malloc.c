@@ -30,7 +30,7 @@ void	*ft_alloc(size_t size, char c)
 	return (NULL);
 }
 
-void	*ft_ft_malloc(size_t size)
+void	*ft_malloc(size_t size)
 {
 	return (ft_alloc(size, 'M'));
 }

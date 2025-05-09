@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstdelone_bonu.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 14:27:01 by souaammo          #+#    #+#             */
-/*   Updated: 2024/10/24 19:56:08 by souaammo         ###   ########.fr       */
+/*   Created: 2024/10/26 19:32:11 by souaammo          #+#    #+#             */
+/*   Updated: 2024/10/28 10:05:17 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	size_t	l;
-
-	l = 0;
-	while (str[l])
-		l++;
-	return (l);
+	if (lst && del)
+	{
+		del(lst->content);
+		free(lst);
+	}
 }

@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstclear_bonu.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 14:27:01 by souaammo          #+#    #+#             */
-/*   Updated: 2024/10/24 19:56:08 by souaammo         ###   ########.fr       */
+/*   Created: 2024/10/26 21:38:51 by souaammo          #+#    #+#             */
+/*   Updated: 2024/10/28 10:05:14 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	size_t	l;
+	t_list	*temp;
+	t_list	*help;
 
-	l = 0;
-	while (str[l])
-		l++;
-	return (l);
+	if ((!lst) || (!del))
+		return ;
+	help = *lst;
+	while (help)
+	{
+		temp = help;
+		help = help->next;
+		del(temp->content);
+		free(temp);
+	}
+	*lst = NULL;
 }

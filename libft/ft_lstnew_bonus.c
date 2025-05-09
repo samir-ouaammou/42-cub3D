@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew_bonu.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 14:27:01 by souaammo          #+#    #+#             */
-/*   Updated: 2024/10/24 19:56:08 by souaammo         ###   ########.fr       */
+/*   Created: 2024/10/26 14:12:49 by souaammo          #+#    #+#             */
+/*   Updated: 2024/10/28 10:05:30 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
+t_list	*ft_lstnew(void *content)
 {
-	size_t	l;
+	t_list	*lst;
 
-	l = 0;
-	while (str[l])
-		l++;
-	return (l);
+	lst = (t_list *)ft_calloc(sizeof(t_list), 1);
+	if (!lst)
+		return (NULL);
+	lst->content = content;
+	lst->next = NULL;
+	return (lst);
 }

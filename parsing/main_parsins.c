@@ -16,27 +16,16 @@ void	ft_print_error(char *str)
 	ft_exit(-1);
 }
 
-void	ft_check_map_elements(t_parsing *data)
-{
-	if (!data)
-		ft_exit(-1);
-	ft_check_texture_is_valid(data);
-	ft_check_floor_color(data, -1, 0);
-	ft_check_ceiling_color(data, -1, 0);
-	ft_check_map(&data->map[6], -1, 0, 0);
-	ft_check_elements(&data->map[6], -1, 0, ft_count_len(&data->map[6], 0));
-	ft_check_dor_errors(&data->map[6], -1, -1);
-}
-
-char	**ft_check_map_errors(char *filename)
+t_map_config	*ft_parsing_map_file(t_map_config *map, char *filename)
 {
 	t_parsing	data;
 	short		len;
 
 	ft_init_parsing(&data);
+	data.data = map;
 	data.str = ft_strrchr(filename, '/');
 	if (data.str && data.str[0] == '/' && data.str[1] && data.str[1] == '.')
-		filename = data.str;
+		filename = &data.str[1];
 	len = ft_strlen(filename);
 	if ((len < 5) || (ft_strcmp(&filename[len - 4], ".cub") != 0))
 	{
@@ -47,8 +36,8 @@ char	**ft_check_map_errors(char *filename)
 	if (data.fd == -1)
 		ft_print_error("Error\nError opening file map\n");
 	ft_read_map_file(&data);
-	if (ft_count_len(data.map, 0) < 9)
-		ft_print_error("Error\nInvalid map.\n");
-	ft_check_map_elements(&data);
-	return (data.map);
+	data.map = ft_split(data.str, '\n');
+	ft_check_elements(data.map, -1, -1, ft_count_len(data.map));
+	ft_player_location_and_map_size(&data, data.map);
+	return (data.data);
 }

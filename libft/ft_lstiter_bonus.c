@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_lstiter_bonu.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/10 11:38:43 by aahaded           #+#    #+#             */
-/*   Updated: 2024/11/10 12:05:04 by aahaded          ###   ########.fr       */
+/*   Created: 2024/10/27 10:05:33 by souaammo          #+#    #+#             */
+/*   Updated: 2024/10/28 10:05:20 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "ft_printf.h"
 
-int	ft_putstr(char *s)
+#include "libft.h"
+
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	int	i;
-
-	i = 0;
-	if (!s)
-		return (write(2, "(null)", 6));
-	while (s[i])
+	if (!lst || !f)
+		return ;
+	while (lst)
 	{
-		write(2, &s[i], 1);
-		i++;
+		f(lst->content);
+		lst = lst->next;
 	}
-	return (i);
 }

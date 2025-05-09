@@ -1,6 +1,6 @@
 #include "../cub3D.h"
 
-void	ft_check_dor_errors(char **map, short i, short j)
+void	ft_check_dor_errors(char **map, size_t i, size_t j)
 {
 	while (map[++i])
 	{
