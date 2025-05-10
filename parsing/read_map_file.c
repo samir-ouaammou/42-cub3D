@@ -13,7 +13,8 @@ char	*ft_replace_whitespace_with_space(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '\t' || str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
+		if (str[i] == '\t' || str[i] == '\v'
+			|| str[i] == '\f' || str[i] == '\r')
 			res[i] = ' ';
 		else
 			res[i] = str[i];
@@ -22,7 +23,6 @@ char	*ft_replace_whitespace_with_space(char *str)
 	res[i] = '\0';
 	return (res);
 }
-
 
 void	ft_read_map_file(t_parsing *data, short nbr, short bol)
 {
