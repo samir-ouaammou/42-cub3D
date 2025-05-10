@@ -19,11 +19,18 @@ int main(int ac, char **av)
         ft_print_error("Error\nmlx_init\n");
     map = ft_parsing_map_file(map, av[1]);
 
-    printf("%d\t%d\t%d\n", map->floor_color[0], map->floor_color[1], map->floor_color[2]);
-    printf("%d\t%d\t%d\n", map->ceiling_color[0], map->ceiling_color[1], map->ceiling_color[2]);
-    short i = 0;
-    while (map->map[i])
-        printf("%s\n", map->map[i++]);
+    // ------------------------------------------------------------------------------------
+    //printf("player:  [%d\t%d]\n", map->player_x, map->player_y);
+    //printf("size:    [%d\t%d]\n", map->map_height, map->map_width);
+    //printf("color f: [%d\t%d\t%d]\n", map->floor_color[0], map->floor_color[1], map->floor_color[2]);
+    //printf("color c: [%d\t%d\t%d]\n", map->ceiling_color[0], map->ceiling_color[1], map->ceiling_color[2]);
 
+    //printf("map :\n");
+    //short i = 0;
+    //while (map->map[i])
+    //    printf("%s\n", map->map[i++]);
+    // ------------------------------------------------------------------------------------
+
+    ft_exit(0);
     return (0);
 }

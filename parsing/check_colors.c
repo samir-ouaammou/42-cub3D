@@ -5,7 +5,6 @@ void	ft_check_colors_is_valid(t_parsing *data, char *str, int nbr)
 	data->split = ft_split(str, ' ');
 	if (!data->split)
 		ft_print_error("Error\nMemory allocation failed (malloc)\n");
-	
 	if (nbr == 4)
 		ft_check_floor_color(data);
 	else if (nbr == 5)
