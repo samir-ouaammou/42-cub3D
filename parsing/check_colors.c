@@ -2,6 +2,7 @@
 
 void	ft_check_colors_is_valid(t_parsing *data, char *str, int nbr)
 {
+	str = ft_strtrim(str, " \n");
 	data->split = ft_split(str, ' ');
 	if (!data->split)
 		ft_print_error("Error\nMemory allocation failed (malloc)\n");
